@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { deleteBlog, setSelectedBlog } from '../redux/blogSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
 
 export default function BlogCard({ blog }) {
   const navigate = useNavigate()
@@ -26,7 +28,8 @@ export default function BlogCard({ blog }) {
         )
 
         if (res.data.success) {
-          dispatch(deleteBlog(blog._id))
+          dispatch(deleteBlog(blog._id));
+          toast.success("Blog Deleted Successfully");
         }
       } catch (error) {
         console.error(error)
@@ -68,7 +71,7 @@ export default function BlogCard({ blog }) {
           >
             Read More →
           </button>
-          {user?._id === blog.author ? (
+          {user?._id === blog.author?._id ? (
             <button
               onClick={handleDelete}
               className='mt-3 bg-red-500 text-white px-4 py-1 rounded'
