@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import * as Yup from 'yup'
 
 
 export default function Signup() {
@@ -30,6 +31,17 @@ export default function Signup() {
       password: '',
     },
     onSubmit: handleSubmit,
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(3, 'Name must be at least 3 characters')
+        .required('Name is required'),
+      email: Yup.string()
+        .email('Invalid email')
+        .required('Email is required'),
+      password: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+    })
   })
 
   return (
@@ -50,6 +62,9 @@ export default function Signup() {
               onChange={formik.handleChange}
               className='w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+            {formik.touched.name && formik.errors.name && (
+            <p className='text-red-500 text-sm'>{formik.errors.name}</p>
+          )}
           </div>
 
           <div>
@@ -64,6 +79,9 @@ export default function Signup() {
               onChange={formik.handleChange}
               className='w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+             {formik.touched.email && formik.errors.email && (
+            <p className='text-red-500 text-sm'>{formik.errors.email}</p>
+          )}
           </div>
 
           <div>
@@ -78,6 +96,9 @@ export default function Signup() {
               onChange={formik.handleChange}
               className='w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+             {formik.touched.password && formik.errors.password && (
+            <p className='text-red-500 text-sm'>{formik.errors.password}</p>
+          )}
           </div>
 
           <button

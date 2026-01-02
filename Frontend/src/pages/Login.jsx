@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { setAuthUser } from '../redux/userSlice'
 import { toast } from 'react-toastify'
-
+import * as Yup from 'yup'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -18,9 +18,9 @@ export default function Login() {
       )
 
       if (res.data.success) {
-        localStorage.setItem('token', res.data?.data?.token);
-        dispatch(setAuthUser(res.data?.data?.user));
-        toast.success("Login Successfully");
+        localStorage.setItem('token', res.data?.data?.token)
+        dispatch(setAuthUser(res.data?.data?.user))
+        toast.success('Login Successfully')
         navigate('/')
       }
     } catch (error) {
@@ -34,6 +34,14 @@ export default function Login() {
       password: '',
     },
     onSubmit: handleSubmit,
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email('Invalid email format')
+        .required('Email is required'),
+      password: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+    }),
   })
 
   return (
@@ -54,6 +62,11 @@ export default function Login() {
               onChange={formik.handleChange}
               className='w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+             {formik.touched.email && formik.errors.email && (
+              <p className='text-red-500 text-sm mt-1'>
+                {formik.errors.email}
+              </p>
+            )}
           </div>
 
           <div>
@@ -68,13 +81,19 @@ export default function Login() {
               onChange={formik.handleChange}
               className='w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
+             {formik.touched.password && formik.errors.password && (
+              <p className='text-red-500 text-sm mt-1'>
+                {formik.errors.password}
+              </p>
+            )}
           </div>
 
-          <button
+           <button
             type='submit'
-            className='w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition'
+            disabled={formik.isSubmitting}
+            className='w-full bg-blue-600 text-white py-2 rounded font-semibold hover:bg-blue-700 transition disabled:opacity-50'
           >
-            Login
+            {formik.isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
