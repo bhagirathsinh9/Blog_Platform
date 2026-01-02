@@ -58,13 +58,11 @@ exports.loginUser = async (req, res) => {
       { expiresIn: '30d' },
     )
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: 'User Login Successfully',
-        data: { token, user },
-      })
+    return res.status(200).json({
+      success: true,
+      message: 'User Login Successfully',
+      data: { token, user },
+    })
   } catch (error) {
     console.error('INTERNAL_SERVER ERROR:', error)
     return res.status(500).json({

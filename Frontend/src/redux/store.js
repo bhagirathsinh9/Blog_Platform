@@ -13,7 +13,6 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-
 const blogPersistConfig = {
   key: 'blog',
   storage,
@@ -23,7 +22,7 @@ const blogPersistConfig = {
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['user', 'token'], 
+  whitelist: ['user', 'token'],
 }
 
 const rootReducer = combineReducers({
