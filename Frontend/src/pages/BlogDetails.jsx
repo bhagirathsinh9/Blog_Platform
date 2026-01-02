@@ -21,7 +21,7 @@ export default function BlogDetails() {
   useEffect(() => {
     if (!blog) return
 
-    socketRef.current.emit('join_blog', blog.id)
+    socketRef.current.emit('join_blog', blog._id)
 
     socketRef.current.on('load_comments', (data) => {
       setComments(data)
@@ -70,7 +70,7 @@ export default function BlogDetails() {
       <h1 className='text-3xl md:text-4xl font-bold mt-2'>{blog.title}</h1>
 
       <p className='text-gray-500 text-sm mt-2'>
-        {blog.date} · By {blog.author || 'Admin'}
+      {blog.date} · By {blog.author?.name || 'Admin'}
       </p>
 
       <img
@@ -79,7 +79,7 @@ export default function BlogDetails() {
         className='w-full h-72 object-cover rounded-lg mt-6'
       />
 
-      <p className='text-gray-700 text-lg leading-relaxed mt-6 wrap-break-word'>
+      <p className='text-gray-700 text-lg leading-relaxed mt-6 whitespace-pre-wrap'>
         {blog.description}
       </p>
 
@@ -94,7 +94,7 @@ export default function BlogDetails() {
         <input
           type='text'
           name='name'
-          value={form.name || user?.name}
+          value={form.name || user?.name || ''}
           onChange={handleChange}
           placeholder='Your Name'
           className='w-full border px-3 py-2 rounded'
