@@ -1,6 +1,8 @@
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
 
 export default function Signup() {
   const navigate = useNavigate()
@@ -13,7 +15,8 @@ export default function Signup() {
       )
       console.log(res)
       if (res.data.success) {
-        navigate('/login')
+        navigate('/login');
+        toast.success("Signup Successfully")
       }
     } catch (error) {
       console.log(error)

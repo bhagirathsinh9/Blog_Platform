@@ -4,6 +4,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { setAuthUser } from '../redux/userSlice'
+import { toast } from 'react-toastify'
+
 
 export default function Login() {
   const navigate = useNavigate()
@@ -16,8 +18,9 @@ export default function Login() {
       )
 
       if (res.data.success) {
-        localStorage.setItem('token', res.data?.data?.token)
-        dispatch(setAuthUser(res.data?.data?.user))
+        localStorage.setItem('token', res.data?.data?.token);
+        dispatch(setAuthUser(res.data?.data?.user));
+        toast.success("Login Successfully");
         navigate('/')
       }
     } catch (error) {

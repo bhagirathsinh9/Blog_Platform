@@ -2,6 +2,8 @@ import React from 'react'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+
 
 export default function AddBlog() {
   const navigate = useNavigate()
@@ -24,7 +26,7 @@ export default function AddBlog() {
       })
 
       if (res.data.success) {
-        alert('Blog submitted successfully')
+        toast.success('Blog submitted successfully')
         resetForm()
         navigate('/')
       }
