@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteBlog, setSelectedBlog } from '../redux/blogSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-
 
 export default function BlogCard({ blog }) {
   const navigate = useNavigate()
@@ -28,8 +27,8 @@ export default function BlogCard({ blog }) {
         )
 
         if (res.data.success) {
-          dispatch(deleteBlog(blog._id));
-          toast.success("Blog Deleted Successfully");
+          dispatch(deleteBlog(blog._id))
+          toast.success('Blog Deleted Successfully')
         }
       } catch (error) {
         console.error(error)
@@ -49,10 +48,18 @@ export default function BlogCard({ blog }) {
         <span className='text-xs text-indigo-600 uppercase font-medium'>
           {blog.category}
         </span>
+        <div className='flex items-center justify-between'>
 
         <h3 className='text-lg font-bold text-gray-900 mt-2 line-clamp-2'>
           {blog.title}
         </h3>
+          <button
+            className='text-indigo-600 text-sm font-semibold hover:underline'
+            onClick={handleReadMore}
+            >
+            Read More →
+          </button>
+          </div>
 
         <p className='text-gray-600 text-sm mt-2 line-clamp-3'>
           {blog.description}
@@ -65,19 +72,22 @@ export default function BlogCard({ blog }) {
               : 'Today'}
           </span>
 
-          <button
-            className='text-indigo-600 text-sm font-semibold hover:underline'
-            onClick={handleReadMore}
-          >
-            Read More →
-          </button>
+
           {user?._id === blog.author?._id ? (
-            <button
-              onClick={handleDelete}
-              className='mt-3 bg-red-500 text-white px-4 py-1 rounded'
-            >
-              Delete
-            </button>
+            <div  className='flex gap-3'>
+              <button
+                onClick={handleDelete}
+                className='mt-3 bg-red-500 text-white px-4 py-1 rounded'
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => navigate(`/edit-blog/${blog._id}`)}
+                className='mt-3 bg-yellow-500 text-white px-4 py-1 rounded'
+              >
+                Edit
+              </button>
+            </div>
           ) : null}
         </div>
       </div>

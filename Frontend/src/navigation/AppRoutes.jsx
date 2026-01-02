@@ -7,6 +7,7 @@ import AddBlog from '../pages/AddBlog'
 import BlogDetails from '../pages/BlogDetails'
 import Signup from '../pages/Signup'
 import Login from '../pages/Login'
+import EditBlog from '../pages/EditBlog'
 
 const AppRouter = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const AppRouter = createBrowserRouter([
         path: '/blog/:id',
         element: <BlogDetails />,
       },
+      {
+        path:"/edit-blog/:id" ,
+        element:<EditBlog />  
+      }
     ],
   },
   {
